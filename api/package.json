@@ -1,0 +1,36 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.ts",
+  "scripts": {
+    "dev": "nodemon --transpile-only -r tsconfig-paths/register src/app.ts",
+    "update:type": "rmdir /s /q  .\\node_modules\\@gitgud\\types && npm i @gitgud/types"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@gitgud/types": "file:../client/src/types",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.7",
+    "socket.io": "^4.8.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.6.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.7.9"
+  }
+}

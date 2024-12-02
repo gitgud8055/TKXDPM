@@ -1,0 +1,11 @@
+{
+  "name": "@gitgud/types",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/main.js",
+  "scripts": {
+    "preinstall": "tsc"
+  },
+  "author": "",
+  "license": "ISC"
+}
