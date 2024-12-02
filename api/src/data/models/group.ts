@@ -13,7 +13,7 @@ export default mongoose.model(
       refrigerators: [
         {
           type: ObjectId,
-          ref: "Refrigerator",
+          ref: "Refrigerator food",
         },
       ],
     },

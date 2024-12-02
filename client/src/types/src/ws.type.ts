@@ -4,6 +4,7 @@ export declare namespace WS {
     CREATE_GROUP: Params.createGroup;
     UPDATE_GROUP: Params.updateGroup;
     DELETE_GROUP: Params.deleteGroup;
+    ADD_REF_FOOD: Params.addRefFood;
   }
 
   export interface From {
@@ -25,6 +26,12 @@ export declare namespace WS {
     }
     export interface deleteGroup {
       groupId: string;
+    }
+    export interface addRefFood {
+      foodId: string;
+      quantity: number;
+      unit: string;
+      note: string;
     }
   }
 }

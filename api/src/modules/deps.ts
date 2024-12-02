@@ -1,5 +1,5 @@
 import { FavDishes } from "./../data/fav-dishes";
-import { Refrigerators } from "./../data/refrigerators";
+import { RefrigeratorFoods } from "../data/refrigerator-foods";
 import { Meals } from "./../data/meals";
 import { ShoppingFoods } from "../data/shopping-foods";
 import { ShoppingList } from "../data/shopping-lists";
@@ -22,7 +22,7 @@ export interface Deps {
   Foods: Foods;
   Dishes: Dishes;
   Meals: Meals;
-  Refrigerators: Refrigerators;
+  RefrigeratorFoods: RefrigeratorFoods;
   FavDishes: FavDishes;
 }
 
@@ -37,7 +37,7 @@ const deps = {
   Foods: new Foods(),
   Dishes: new Dishes(),
   Meals: new Meals(),
-  Refrigerators: new Refrigerators(),
+  RefrigeratorFoods: new RefrigeratorFoods(),
   FavDishes: new FavDishes(),
 };
 
