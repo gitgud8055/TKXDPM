@@ -11,15 +11,13 @@ export default class implements WSEvent<"ADD_REF_FOOD"> {
     client: Socket,
     { foodId, quantity, unit, note }: WS.Params.addRefFood
   ) {
-    const food = await deps.Foods.findOne({ _id: foodId });
+    const food = await deps.Foods.get(foodId);
     if (!food) {
-      return [
-        {
-          emit: "ERROR",
-          to: [client.id],
-          send: { message: "Food not found" },
-        },
-      ];
+      throw new Error("Food not found");
+    }
+    // console.log(unit, food.unit, unit in food.unit);
+    if (!food.unit.includes(unit)) {
+      throw new Error("Invalid unit");
     }
 
     const refFood = await deps.RefrigeratorFoods.create({
@@ -29,12 +27,6 @@ export default class implements WSEvent<"ADD_REF_FOOD"> {
       note,
     });
 
-    return [
-      {
-        emit: "ADD_REF_FOOD",
-        to: [client.id],
-        send: { refFood },
-      },
-    ];
+    return [];
   }
 }

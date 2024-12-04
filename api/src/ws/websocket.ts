@@ -37,8 +37,9 @@ export class Websocket {
             for (const action of actions) {
               this.handle(action);
             }
-          } catch (error) {
+          } catch (error: any) {
             console.log(error);
+            client.emit("error", { message: error.message });
           }
         });
       }

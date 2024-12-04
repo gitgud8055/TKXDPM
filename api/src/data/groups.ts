@@ -26,7 +26,7 @@ export class Groups extends Wrapper {
   }
   public update(options: Partial<Entity.Group>) {
     const { id, ...data } = options;
-    return group.findByIdAndUpdate(id, data);
+    return group.findByIdAndUpdate(id, { $set: data });
   }
   public delete(id: string) {
     return group.findByIdAndDelete(id);

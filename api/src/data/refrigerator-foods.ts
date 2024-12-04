@@ -16,4 +16,12 @@ export class RefrigeratorFoods extends Wrapper {
       note,
     });
   }
+  public update({ id, quantity, note }) {
+    return refrigeratorFood.findByIdAndUpdate(id, {
+      $set: { quantity, note },
+    });
+  }
+  public delete(id: string) {
+    return refrigeratorFood.findByIdAndDelete(id);
+  }
 }
