@@ -7,7 +7,7 @@ export class SharedShoppingLists extends Wrapper {
     return sharedShoppingList.findById(id);
   }
   public getDetail(id: string) {
-    return this.get(id).populate(["group", "list"]);
+    return this.get(id).populate(["list"]);
   }
   public getByGroupId(groupId: string) {
     return sharedShoppingList.find({ group: groupId });

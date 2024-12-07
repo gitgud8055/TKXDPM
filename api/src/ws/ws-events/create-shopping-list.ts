@@ -20,21 +20,23 @@ export default class implements WSEvent<"CREATE_SHOPPING_LIST"> {
       },
       {} as Record<string, string[]>
     );
-    items = items.filter(
-      (x) =>
-        x.food !== undefined &&
-        x.unit !== undefined &&
-        x.food in foodIds &&
-        foodIds[x.food].includes(x.unit)
-    );
-    const SLids = await deps.ShoppingFood.createMany(items);
-    await deps.ShoppingList.create({
+    const newList = await deps.ShoppingList.create({
       name,
       date,
       note,
-      items: SLids.map((x) => x._id.toString()),
       owner: userId,
     });
+    items = items
+      .filter(
+        (x) =>
+          x.food !== undefined &&
+          x.unit !== undefined &&
+          x.food in foodIds &&
+          foodIds[x.food].includes(x.unit)
+      )
+      .map((x) => ({ ...x, list: newList._id.toString() }));
+    console.log(items);
+    const SLids = await deps.ShoppingFood.createMany(items);
     return [];
   }
 }

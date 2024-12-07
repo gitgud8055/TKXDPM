@@ -20,22 +20,25 @@ const FoodDetail = new mongoose.Schema({
 
 export default mongoose.model(
   "Dish",
-  new mongoose.Schema({
-    name: {
-      type: String,
-      require: [true, "name is required"],
-    },
-    images: [
-      {
+  new mongoose.Schema(
+    {
+      name: {
         type: String,
+        require: [true, "name is required"],
       },
-    ],
-    materials: [FoodDetail],
-    information: String,
-    owner: {
-      type: ObjectId,
-      ref: "User",
-      require: [true, "owner is required"],
+      images: [
+        {
+          type: String,
+        },
+      ],
+      materials: [FoodDetail],
+      information: String,
+      owner: {
+        type: ObjectId,
+        ref: "User",
+        require: [true, "owner is required"],
+      },
     },
-  })
+    { timestamps: true }
+  )
 );

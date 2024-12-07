@@ -22,6 +22,11 @@ export declare namespace WS {
     UPDATE_USER: Params.updateUser;
     CREATE_SHARED_LIST: Params.createSharedList;
     DELETE_SHARED_LIST: Params.deleteSharedList;
+    CREATE_INGREDIENT: Params.createIngredient;
+    UPDATE_INGREDIENT: Params.updateIngredient;
+    DELETE_INGREDIENT: Params.deleteIngredient;
+    CREATE_MEAL: Params.createMeal;
+    DELETE_MEAL: Params.deleteMeal;
   }
 
   export interface From {
@@ -125,6 +130,36 @@ export declare namespace WS {
     export interface deleteSharedList {
       id: string;
       token: string;
+    }
+    export interface createIngredient {
+      token: string;
+      name: string;
+      image: string;
+      unit: string;
+      duration: number;
+    }
+    export interface updateIngredient {
+      token: string;
+      id: string;
+      name: string;
+      image: string;
+      unit: string;
+      duration: number;
+    }
+    export interface deleteIngredient {
+      token: string;
+      id: string;
+    }
+    export interface createMeal {
+      token: string;
+      name: string;
+      images: string[];
+      dishIds: string[];
+      date: Date;
+    }
+    export interface deleteMeal {
+      token: string;
+      id: string;
     }
   }
 }

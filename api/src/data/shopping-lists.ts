@@ -7,19 +7,11 @@ export class ShoppingList extends Wrapper {
     return shoppingList.findById(id);
   }
   public async getDetail(id: string) {
-    const data = await this.get(id)
-      .populate({
-        path: "items",
-        populate: { path: "food" },
-      })
-      .lean();
-    data.items = data.items.map((item) => {
-      item.name = item.food.name;
-      item.image = item.food.image;
-      item.food = undefined;
-      return item;
-    });
-    return data;
+    const [data, items] = await Promise.all([
+      this.get(id),
+      deps.ShoppingFood.getList(id),
+    ]);
+    return { ...data?.toObject(), items };
   }
   public create({
     name,

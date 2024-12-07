@@ -3,16 +3,19 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 export default mongoose.model(
   "Favourite dish",
-  new mongoose.Schema({
-    user: {
-      type: ObjectId,
-      ref: "User",
-      require: [true, "user is required"],
+  new mongoose.Schema(
+    {
+      user: {
+        type: ObjectId,
+        ref: "User",
+        require: [true, "user is required"],
+      },
+      dish: {
+        type: ObjectId,
+        ref: "Dish",
+        require: [true, "dish is required"],
+      },
     },
-    dish: {
-      type: ObjectId,
-      ref: "Dish",
-      require: [true, "dish is required"],
-    },
-  })
+    { timestamps: true }
+  )
 );

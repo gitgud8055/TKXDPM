@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-export default mongoose.model(
-  "Refrigerator food",
-  new mongoose.Schema({
+const refFood = new mongoose.Schema(
+  {
     food: {
       type: ObjectId,
       ref: "Food",
@@ -18,12 +17,23 @@ export default mongoose.model(
       type: String,
       require: [true, "unit type is required"],
     },
-    expired: {
-      type: Date,
-      require: [true, "expired time is required"],
-    },
     note: {
       type: String,
     },
-  })
+  },
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+function addDays(date: Date, days: number) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+refFood.virtual("expired").get(function () {
+  return this.populated("food")
+    ? addDays(this.createdAt, this.food.duration)
+    : null;
+});
+
+export default mongoose.model("Refrigerator food", refFood);

@@ -18,6 +18,7 @@ export declare namespace Entity {
   export interface ShoppingFood {
     id: string;
     food: string;
+    list: string;
     quantity: number;
     unit: string;
     note: string;
@@ -51,5 +52,19 @@ export declare namespace Entity {
     food: string;
     unit: string;
     quantity: number;
+  }
+  export interface Ingredient {
+    id: string;
+    name: string;
+    image: string;
+    unit: string;
+    duration: number;
+  }
+  export interface Meal {
+    id: string;
+    date: Date;
+    images: string[];
+    name: string;
+    dishes: string[];
   }
 }

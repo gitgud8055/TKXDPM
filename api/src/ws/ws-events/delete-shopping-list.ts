@@ -15,10 +15,9 @@ export default class implements WSEvent<"DELETE_SHOPPING_LIST"> {
     const shoppingList = await deps.ShoppingList.get(id);
     if (!shoppingList) throw new Error("Shopping list not found");
     await deps.WSGuard.canModify(userId, shoppingList.owner!.toString());
-    const items = shoppingList.items.map((x) => x.toString());
     await Promise.all([
       deps.ShoppingList.delete(id),
-      deps.ShoppingFood.deleteList(items),
+      deps.ShoppingFood.deleteList(id),
     ]);
     return [];
   }

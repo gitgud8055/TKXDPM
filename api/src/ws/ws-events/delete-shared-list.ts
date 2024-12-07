@@ -14,7 +14,10 @@ export default class implements WSEvent<"DELETE_SHARED_LIST"> {
     const userId = deps.WSGuard.decodeToken(token);
     const shared = await deps.SharedShoppingLists.getDetail(id);
     if (!shared) throw new Error("Shared list not found");
-    await deps.WSGuard.canModify(userId, shared.list!.owner.toString());
+    await Promise.all([
+      deps.WSGuard.canModify(userId, shared.list!.owner.toString()),
+      deps.WSGuard.userInGroup(userId, shared.group!.toString()),
+    ]);
     await deps.SharedShoppingLists.delete(id);
     return [];
   }

@@ -7,12 +7,11 @@ export class Groups extends Wrapper {
     return group.findById(id);
   }
   public async getWithRef(id: string) {
-    const data = await this.get(id)
-      .populate({
-        path: "refrigerators",
-        populate: { path: "food" },
-      })
-      .lean();
+    const query = await this.get(id).populate({
+      path: "refrigerators",
+      populate: { path: "food" },
+    });
+    const data = query?.toObject();
     data.refrigerators = data.refrigerators.map((item) => {
       item.name = item.food.name;
       item.image = item.food.image;
