@@ -10,5 +10,10 @@ export declare namespace REST {
       username: string;
       phone: string;
     };
+    "/change-password": {
+      email: string;
+      oldPassword: string;
+      newPassword: string;
+    };
   }
 }

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 export default mongoose.model(
-  "Shared shopping food",
+  "Shared shopping list",
   new mongoose.Schema({
     group: {
       type: ObjectId,

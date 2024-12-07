@@ -1,3 +1,4 @@
+import { WSGuard } from "./../ws/modules/ws-guard";
 import { FavDishes } from "./../data/fav-dishes";
 import { RefrigeratorFoods } from "../data/refrigerator-foods";
 import { Meals } from "./../data/meals";
@@ -15,6 +16,7 @@ export interface Deps {
   User: User;
   REST: REST;
   Websocket: Websocket;
+  WSGuard: WSGuard;
   Groups: Groups;
   SharedShoppingLists: SharedShoppingLists;
   ShoppingList: ShoppingList;
@@ -30,6 +32,7 @@ const deps = {
   User: new User(),
   REST: new REST(),
   Websocket: new Websocket(),
+  WSGuard: new WSGuard(),
   Groups: new Groups(),
   SharedShoppingLists: new SharedShoppingLists(),
   ShoppingList: new ShoppingList(),

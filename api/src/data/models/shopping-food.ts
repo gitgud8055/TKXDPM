@@ -12,15 +12,15 @@ export default mongoose.model(
     quantity: {
       type: Number,
       require: [true, "quantity is required"],
+      min: [0, "quantity must be greater than or equal to 0"],
     },
     unit: {
       type: String,
       require: [true, "unit type is required"],
     },
-    location: {
+    bought: {
       type: ObjectId,
-      ref: "Refrigerator",
-      require: [true, "Food location is required"],
+      ref: "User",
     },
     note: String,
   })

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export default mongoose.model(
-  "Food",
+  "Ingredient",
   new mongoose.Schema({
     name: {
       type: String,
@@ -11,6 +11,7 @@ export default mongoose.model(
     unit: [String],
     expired: {
       type: Number,
+      require: [true, "Expired time is required"],
     },
   })
 );

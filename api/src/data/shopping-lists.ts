@@ -1,3 +1,4 @@
+import { Entity } from "@gitgud/types";
 import shoppingList from "./models/shopping-list";
 import { Wrapper } from "./wrapper";
 
@@ -20,7 +21,13 @@ export class ShoppingList extends Wrapper {
     });
     return data;
   }
-  public create({ name, owner, date, note, items }) {
+  public create({
+    name,
+    owner,
+    date,
+    note,
+    items,
+  }: Partial<Entity.ShoppingList>) {
     return shoppingList.create({
       name,
       owner,
@@ -28,5 +35,11 @@ export class ShoppingList extends Wrapper {
       note,
       items,
     });
+  }
+  public update({ id, name, date, note }: Partial<Entity.ShoppingList>) {
+    return shoppingList.findByIdAndUpdate(id, { $set: { name, date, note } });
+  }
+  public delete(id: string) {
+    return shoppingList.findByIdAndDelete(id);
   }
 }

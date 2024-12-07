@@ -1,17 +1,18 @@
 import { Router } from "express";
 import { APIError } from "../../utils/api-error";
 import jwt from "jsonwebtoken";
+import { REST } from "@gitgud/types";
 
 export const router = Router();
 
 router.post("/login", async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password }: REST.To["/login"] = req.body;
   try {
     const user = await deps.User.getByEmail(email);
     if (!user) return next(new APIError(404, "Wrong username or password"));
     if (user.password !== password)
       return next(new APIError(404, "Wrong username or password"));
-    const token = jwt.sign({ id: user._id }, process.env.JWT_KEY);
+    const token = deps.User.createToken({ id: user._id });
     res
       .cookie("access_token", token, { httpOnly: true, secure: true })
       .status(200)
@@ -23,7 +24,7 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.post("/register", async (req, res, next) => {
-  const { email, password, username, phone } = req.body;
+  const { email, password, username, phone }: REST.To["/register"] = req.body;
   try {
     const user = await deps.User.getByEmail(email);
     if (user) return next(new APIError(406, "User already exists"));
@@ -37,4 +38,21 @@ router.post("/register", async (req, res, next) => {
 
 router.post("/logout", async (req, res, next) => {
   res.clearCookie("access_token").status(200).json({ message: "Success" });
+});
+
+router.post("/change-password", async (req, res, next) => {
+  const { email, oldPassword, newPassword }: REST.To["/change-password"] =
+    req.body;
+  try {
+    const user = await deps.User.getByEmail(email);
+    if (!user) return next(new APIError(404, "User not found"));
+    if (user.password !== oldPassword)
+      return next(new APIError(400, "Wrong password"));
+    user.password = newPassword;
+    await user.save();
+    res.status(200).json({ message: "Success" });
+  } catch (error) {
+    console.error(error);
+    next(new APIError());
+  }
 });
