@@ -1,0 +1,14 @@
+.container {
+  animation: slide 0.3s ease-in-out forwards;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0);
+    opacity: 1;
+  }
+}

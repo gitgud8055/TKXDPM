@@ -9,9 +9,9 @@ export default class implements WSEvent<"DELETE_SHARED_LIST"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { id, token }: WS.Params.deleteSharedList
+    { id }: WS.Params.deleteSharedList
   ) {
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     const shared = await deps.SharedShoppingLists.getDetail(id);
     if (!shared) throw new Error("Shared list not found");
     await Promise.all([

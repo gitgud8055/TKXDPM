@@ -9,9 +9,9 @@ export default class implements WSEvent<"CREATE_INGREDIENT"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { token, name, image, unit, duration }: WS.Params.createIngredient
+    { name, image, unit, duration }: WS.Params.createIngredient
   ) {
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     await deps.WSGuard.isAdmin(userId);
 
     await deps.Foods.create({

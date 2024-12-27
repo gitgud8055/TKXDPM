@@ -9,16 +9,16 @@ export default class implements WSEvent<"UPDATE_INGREDIENT"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { id, name, image, unit, duration, token }: WS.Params.updateIngredient
+    { id, name, image, unit, duration }: WS.Params.updateIngredient
   ) {
     const ingredient = await deps.Foods.get(id);
     if (!ingredient) throw new Error("Ingredient not found");
 
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     await deps.WSGuard.isAdmin(userId);
 
     await deps.Foods.update({
-      id,
+      _id: id,
       name,
       image,
       unit,

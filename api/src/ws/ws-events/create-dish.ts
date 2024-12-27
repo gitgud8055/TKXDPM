@@ -9,9 +9,9 @@ export default class implements WSEvent<"CREATE_DISH"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { name, images, materials, information, token }: WS.Params.createDish
+    { name, images, materials, information }: WS.Params.createDish
   ) {
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     const foodIds = (
       await deps.Foods.getList(materials.map((x) => x.food))
     ).reduce((m, obj) => {

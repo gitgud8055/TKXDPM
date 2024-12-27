@@ -1,3 +1,4 @@
+import { Entity } from "@gitgud/types";
 import refrigeratorFood from "./models/refrigerator-food";
 import { Wrapper } from "./wrapper";
 
@@ -8,7 +9,12 @@ export class RefrigeratorFoods extends Wrapper {
   public async getDetail(id: string) {
     return this.getFull(id, ["food"]);
   }
-  public create({ food, quantity, unit, note }) {
+  public create({
+    food,
+    quantity,
+    unit,
+    note,
+  }: Partial<Entity.RefrigeratorFood>) {
     return refrigeratorFood.create({
       food,
       quantity,
@@ -16,8 +22,8 @@ export class RefrigeratorFoods extends Wrapper {
       note,
     });
   }
-  public update({ id, quantity, note }) {
-    return refrigeratorFood.findByIdAndUpdate(id, {
+  public update({ _id, quantity, note }: Partial<Entity.RefrigeratorFood>) {
+    return refrigeratorFood.findByIdAndUpdate(_id, {
       $set: { quantity, note },
     });
   }

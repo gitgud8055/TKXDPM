@@ -1,9 +1,11 @@
+import { WS } from "@gitgud/types";
 import { createAction, createSlice } from "@reduxjs/toolkit";
 
 export const actions = {
-  restCallBegan: createAction<object>("api/restCallBegan"),
+  restCallBegan: createAction<APIArgs>("api/restCallBegan"),
   restCallSucceed: createAction<object>("api/restCallSucceed"),
   restCallFailed: createAction<object>("api/restCallFailed"),
+  wsCallBegan: createAction<WSArgs>("api/wsCallBegan"),
 };
 
 export interface APIArgs {
@@ -12,8 +14,14 @@ export interface APIArgs {
   headers?: object;
   data?: object;
   errorDisplay?: "snackbar" | "swal";
+  onSuccess?: string[];
   callback?: (payload: any) => any;
   errorCallback?: (payload: any) => any;
+}
+
+export interface WSArgs {
+  data?: object;
+  event: keyof WS.To;
 }
 
 const slice = createSlice({

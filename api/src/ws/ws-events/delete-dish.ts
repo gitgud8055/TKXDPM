@@ -9,9 +9,9 @@ export default class implements WSEvent<"DELETE_DISH"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { id, token }: WS.Params.deleteDish
+    { id }: WS.Params.deleteDish
   ) {
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     const dish = await deps.Dishes.get(id);
     if (!dish) throw new Error("Dish not found");
     await deps.WSGuard.canModify(userId, dish.owner!.toString());

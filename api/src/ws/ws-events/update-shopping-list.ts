@@ -9,15 +9,15 @@ export default class implements WSEvent<"UPDATE_SHOPPING_LIST"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { id, name, date, note, token }: WS.Params.updateShoppingList
+    { id, name, date, note }: WS.Params.updateShoppingList
   ) {
     const shoppingList = await deps.ShoppingList.get(id);
     if (!shoppingList) throw new Error("Shopping list not found");
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     await deps.WSGuard.canModify(userId, shoppingList.owner!.toString());
 
     await deps.ShoppingList.update({
-      id,
+      _id: id,
       name,
       date,
       note,

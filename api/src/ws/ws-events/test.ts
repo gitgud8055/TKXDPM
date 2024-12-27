@@ -11,6 +11,8 @@ export default class implements WSEvent<"TEST"> {
     client: Socket,
     { message }: WS.Params.test
   ) {
+    const userId = client.data.userId;
+    throw new Error(userId);
     console.log(message);
     return [];
   }

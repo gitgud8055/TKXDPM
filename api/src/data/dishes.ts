@@ -11,13 +11,13 @@ export class Dishes extends Wrapper {
     return this.getFull(id, ["materials.food"]);
   }
   public getList(id: (string | undefined)[]) {
-    return dish.find({ _id: { $in: id } });
+    return dish.find({ _id: { $in: id } }).populate("materials.food owner");
   }
   public create(options: Partial<Entity.Dish>) {
     return dish.create(options);
   }
   public update(options: Partial<Entity.Dish>) {
-    const { id, ...data } = options;
+    const { _id: id, ...data } = options;
     return dish.findByIdAndUpdate(id, { $set: data });
   }
   public delete(id: string) {

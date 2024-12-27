@@ -28,8 +28,8 @@ export class ShoppingList extends Wrapper {
       items,
     });
   }
-  public update({ id, name, date, note }: Partial<Entity.ShoppingList>) {
-    return shoppingList.findByIdAndUpdate(id, { $set: { name, date, note } });
+  public update({ _id, name, date, note }: Partial<Entity.ShoppingList>) {
+    return shoppingList.findByIdAndUpdate(_id, { $set: { name, date, note } });
   }
   public delete(id: string) {
     return shoppingList.findByIdAndDelete(id);

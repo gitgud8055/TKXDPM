@@ -1,3 +1,5 @@
+import { Entity } from "./entity.type";
+
 export declare namespace REST {
   export interface To {
     "/login": {
@@ -15,5 +17,14 @@ export declare namespace REST {
       oldPassword: string;
       newPassword: string;
     };
+  }
+  namespace From {
+    export interface GET {
+      "/api/users/entities": {
+        groups: Entity.Group[];
+        favs: Entity.FavDish[];
+        dish: Entity.DishDetail[];
+      };
+    }
   }
 }

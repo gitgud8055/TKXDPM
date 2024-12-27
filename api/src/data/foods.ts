@@ -9,6 +9,9 @@ export class Foods extends Wrapper {
   public getList(id: (string | undefined)[]) {
     return food.find({ _id: { $in: id } });
   }
+  public getByName(name: string) {
+    return food.findOne({ name });
+  }
   public create({ name, image, unit, duration }: Partial<Entity.Ingredient>) {
     return food.create({
       name,
@@ -18,13 +21,13 @@ export class Foods extends Wrapper {
     });
   }
   public update({
-    id,
+    _id,
     name,
     image,
     unit,
     duration,
   }: Partial<Entity.Ingredient>) {
-    return food.findByIdAndUpdate(id, {
+    return food.findByIdAndUpdate(_id, {
       $set: { name, image, unit, duration },
     });
   }

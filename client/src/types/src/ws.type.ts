@@ -27,10 +27,16 @@ export declare namespace WS {
     DELETE_INGREDIENT: Params.deleteIngredient;
     CREATE_MEAL: Params.createMeal;
     DELETE_MEAL: Params.deleteMeal;
+    UPDATE_DISH_MAT: Params.updateDishMat;
+    DELETE_DISH_MAT: Params.deleteDishMat;
+    ADD_DISH_MAT: Params.addDishMat;
   }
 
   export interface From {
     TEST: {};
+    DELETE_FAV_DISH: Args.deleteFavDish;
+    UPDATE_DISH_MAT: Args.updateDishMat;
+    DELETE_DISH_MAT: Args.deleteDishMat;
   }
 
   export namespace Params {
@@ -64,13 +70,11 @@ export declare namespace WS {
       id: string;
     }
     export interface updateUser {
-      token: string;
       username: string;
       avatar: string;
       phone: string;
     }
     export interface createShoppingList {
-      token: string;
       name: string;
       date: Date;
       note: string;
@@ -86,18 +90,14 @@ export declare namespace WS {
       images: string[];
       materials: Entity.FoodDetail[];
       information: string;
-      token: string;
     }
     export interface createFavDish {
-      token: string;
       dishId: string;
     }
     export interface deleteFavDish {
-      token: string;
       dishId: string;
     }
     export interface deleteUser {
-      token: string;
       id: string;
     }
     export interface updateDish {
@@ -105,41 +105,33 @@ export declare namespace WS {
       name: string;
       images: string[];
       information: string;
-      token: string;
     }
     export interface deleteDish {
       id: string;
-      token: string;
     }
     export interface deleteShoppingList {
       id: string;
-      token: string;
     }
     export interface updateShoppingList {
       id: string;
       name: string;
       date: Date;
       note: string;
-      token: string;
     }
     export interface createSharedList {
       groupId: string;
       shoppingListId: string;
-      token: string;
     }
     export interface deleteSharedList {
       id: string;
-      token: string;
     }
     export interface createIngredient {
-      token: string;
       name: string;
       image: string;
       unit: string;
       duration: number;
     }
     export interface updateIngredient {
-      token: string;
       id: string;
       name: string;
       image: string;
@@ -147,19 +139,46 @@ export declare namespace WS {
       duration: number;
     }
     export interface deleteIngredient {
-      token: string;
       id: string;
     }
     export interface createMeal {
-      token: string;
       name: string;
       images: string[];
       dishIds: string[];
       date: Date;
     }
     export interface deleteMeal {
-      token: string;
       id: string;
+    }
+    export interface updateDishMat {
+      id: string;
+      material: Entity.FoodDetail;
+    }
+    export interface deleteDishMat {
+      id: string;
+      materialId: string;
+    }
+    export interface addDishMat {
+      id: string;
+      material: {
+        food: string;
+        quantity: number;
+        unit: string;
+      };
+    }
+  }
+
+  export namespace Args {
+    export interface deleteFavDish {
+      id: string;
+    }
+    export interface updateDishMat {
+      id: string;
+      material: Entity.FoodDetail;
+    }
+    export interface deleteDishMat {
+      id: string;
+      materialId: string;
     }
   }
 }

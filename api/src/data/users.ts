@@ -22,10 +22,10 @@ export class User extends Wrapper {
     });
   }
   public secure(user: any) {
-    return this.exclude(user, ["password", "groups", "_id", "role"]);
+    return this.exclude(user, ["password", "groups", "role"]);
   }
   public update(options: Partial<Entity.User>) {
-    const { id, ...data } = options;
+    const { _id: id, ...data } = options;
     return user.findByIdAndUpdate(id, { $set: data });
   }
   public delete(id: string) {

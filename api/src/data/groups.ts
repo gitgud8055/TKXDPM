@@ -11,7 +11,7 @@ export class Groups extends Wrapper {
       path: "refrigerators",
       populate: { path: "food" },
     });
-    const data = query?.toObject();
+    const data: any = query?.toObject();
     data.refrigerators = data.refrigerators.map((item) => {
       item.name = item.food.name;
       item.image = item.food.image;
@@ -20,11 +20,14 @@ export class Groups extends Wrapper {
     });
     return data;
   }
+  public getAll(id: string[]) {
+    return group.find({ _id: { $in: id } });
+  }
   public create(options: Partial<Entity.Group>) {
     return group.create(options);
   }
   public update(options: Partial<Entity.Group>) {
-    const { id, ...data } = options;
+    const { _id: id, ...data } = options;
     return group.findByIdAndUpdate(id, { $set: data });
   }
   public delete(id: string) {

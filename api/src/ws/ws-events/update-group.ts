@@ -12,7 +12,7 @@ export default class implements WSEvent<"UPDATE_GROUP"> {
     { groupId, groupName, groupAvatar }: WS.Params.updateGroup
   ) {
     const group = await deps.Groups.update({
-      id: groupId,
+      _id: groupId,
       name: groupName,
       avatar: groupAvatar,
     });

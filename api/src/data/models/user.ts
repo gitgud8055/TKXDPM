@@ -14,9 +14,18 @@ export default mongoose.model(
         type: String,
         required: [true, "Password is required"],
       },
-      username: String,
-      phone: String,
-      avatar: String,
+      username: {
+        type: String,
+        default: "",
+      },
+      phone: {
+        type: String,
+        default: "",
+      },
+      avatar: {
+        type: String,
+        default: "default.png",
+      },
       groups: [
         {
           type: ObjectId,

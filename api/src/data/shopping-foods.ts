@@ -9,9 +9,15 @@ export class ShoppingFoods extends Wrapper {
   public getList(listId: string) {
     return shoppingFood.find({ list: listId });
   }
-  public create({ foodId, list, quantity, unit, note }) {
+  public create({
+    food,
+    list,
+    quantity,
+    unit,
+    note,
+  }: Partial<Entity.ShoppingFood>) {
     return shoppingFood.create({
-      food: foodId,
+      food,
       list,
       quantity,
       unit,
@@ -21,8 +27,8 @@ export class ShoppingFoods extends Wrapper {
   public createMany(items: Partial<Entity.ShoppingFood>[]) {
     return shoppingFood.insertMany(items);
   }
-  public update({ id, quantity, note }: Partial<Entity.ShoppingFood>) {
-    return shoppingFood.findByIdAndUpdate(id, { $set: { quantity, note } });
+  public update({ _id, quantity, note }: Partial<Entity.ShoppingFood>) {
+    return shoppingFood.findByIdAndUpdate(_id, { $set: { quantity, note } });
   }
   public deleteList(listid: string) {
     return shoppingFood.deleteMany({ list: listid });

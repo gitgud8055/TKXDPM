@@ -3,6 +3,7 @@ import { Server } from "http";
 import { resolve } from "path";
 import { Server as SocketServer } from "socket.io";
 import { SessionManager } from "./modules/session-manager";
+import { parse } from "cookie";
 
 export class Websocket {
   public io!: SocketServer;
@@ -11,8 +12,9 @@ export class Websocket {
   public async init(server: Server) {
     this.io = new SocketServer(server, {
       cors: {
-        origin: "*",
+        origin: process.env.CLIENT_URL,
         methods: ["GET", "POST"],
+        credentials: true,
       },
     });
 
@@ -27,6 +29,18 @@ export class Websocket {
         console.error("Error on event: ", file);
       }
     }
+
+    this.io.use((socket, next) => {
+      try {
+        const cookies = socket.handshake.headers.cookie;
+        const token = parse(cookies!)["access_token"];
+        socket.data.userId = deps.WSGuard.decodeToken(token!);
+        next();
+      } catch (error) {
+        console.log("Error: ", error);
+        next(new Error("Not authorized"));
+      }
+    });
 
     this.io.on("connection", (client) => {
       console.log(client.id);

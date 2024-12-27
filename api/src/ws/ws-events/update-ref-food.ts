@@ -12,7 +12,7 @@ export default class implements WSEvent<"UPDATE_REF_FOOD"> {
     { id, quantity, note }: WS.Params.updateRefFood
   ) {
     const food = await deps.RefrigeratorFoods.update({
-      id,
+      _id: id,
       quantity,
       note,
     });

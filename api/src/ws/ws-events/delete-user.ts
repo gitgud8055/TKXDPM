@@ -9,9 +9,9 @@ export default class implements WSEvent<"DELETE_USER"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { id, token }: WS.Params.deleteUser
+    { id }: WS.Params.deleteUser
   ) {
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     await deps.WSGuard.canModify(userId, id);
     await deps.User.delete(id);
     return [];

@@ -10,9 +10,9 @@ export default class implements WSEvent<"CREATE_SHOPPING_LIST"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { token, name, date, note, items }: WS.Params.createShoppingList
+    { name, date, note, items }: WS.Params.createShoppingList
   ) {
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     const foodIds = (await deps.Foods.getList(items.map((x) => x.food))).reduce(
       (m, obj) => {
         m[obj._id.toString()] = obj.unit;

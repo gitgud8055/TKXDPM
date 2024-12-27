@@ -9,9 +9,9 @@ export default class implements WSEvent<"CREATE_FAV_DISH"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { dishId, token }: WS.Params.createFavDish
+    { dishId }: WS.Params.createFavDish
   ) {
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     const dish = await deps.Dishes.get(dishId);
     if (!dish) throw new Error("Dish not found");
     await deps.FavDishes.create({ dish: dishId, user: userId });

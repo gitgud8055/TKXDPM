@@ -9,9 +9,9 @@ export default class implements WSEvent<"DELETE_MEAL"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { id, token }: WS.Params.deleteMeal
+    { id }: WS.Params.deleteMeal
   ) {
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     // const meal = await deps.Meals.get(id);
     // if (!meal) throw new Error("Meal not found");
     await deps.Meals.delete(id);

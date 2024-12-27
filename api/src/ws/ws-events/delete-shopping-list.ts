@@ -9,9 +9,9 @@ export default class implements WSEvent<"DELETE_SHOPPING_LIST"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { id, token }: WS.Params.deleteShoppingList
+    { id }: WS.Params.deleteShoppingList
   ) {
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     const shoppingList = await deps.ShoppingList.get(id);
     if (!shoppingList) throw new Error("Shopping list not found");
     await deps.WSGuard.canModify(userId, shoppingList.owner!.toString());

@@ -15,7 +15,7 @@ export class SharedShoppingLists extends Wrapper {
   public getByListId(listId: string) {
     return sharedShoppingList.find({ list: listId });
   }
-  public create({ group, list }: Entity.SharedShoppingLists) {
+  public create({ group, list }: Partial<Entity.SharedShoppingLists>) {
     return sharedShoppingList.create({ group, list });
   }
   public delete(id: string) {

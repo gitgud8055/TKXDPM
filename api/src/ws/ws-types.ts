@@ -14,5 +14,5 @@ export interface WSEvent<K extends keyof WS.To> {
 export interface WSAction<K extends keyof WS.From> {
   emit: K;
   to: string[];
-  send: WS.From[K];
+  data: WS.From[K];
 }

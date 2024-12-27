@@ -9,9 +9,9 @@ export default class implements WSEvent<"CREATE_SHARED_LIST"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { token, groupId, shoppingListId }: WS.Params.createSharedList
+    { groupId, shoppingListId }: WS.Params.createSharedList
   ) {
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     const group = await deps.Groups.get(groupId);
     if (!group) throw new Error("Group not exists");
     const list = await deps.ShoppingList.get(shoppingListId);

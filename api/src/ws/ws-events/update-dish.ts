@@ -9,15 +9,15 @@ export default class implements WSEvent<"UPDATE_DISH"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { id, name, images, information, token }: WS.Params.updateDish
+    { id, name, images, information }: WS.Params.updateDish
   ) {
     const dish = await deps.Dishes.get(id);
     if (!dish) throw new Error("Dish not found");
-    const userId = deps.WSGuard.decodeToken(token);
+    const userId = client.data.userId;
     await deps.WSGuard.canModify(userId, dish.owner!.toString());
 
     await deps.Dishes.update({
-      id,
+      _id: id,
       name,
       images,
       information,

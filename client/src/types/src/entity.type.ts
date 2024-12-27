@@ -1,6 +1,6 @@
 export declare namespace Entity {
   export interface User {
-    id: string;
+    _id: string;
     email: string;
     password: string;
     username: string;
@@ -10,13 +10,13 @@ export declare namespace Entity {
     role: string;
   }
   export interface Group {
-    id: string;
+    _id: string;
     name: string;
     avatar: string;
     refrigerators: string[];
   }
   export interface ShoppingFood {
-    id: string;
+    _id: string;
     food: string;
     list: string;
     quantity: number;
@@ -25,7 +25,7 @@ export declare namespace Entity {
     bought: string;
   }
   export interface ShoppingList {
-    id: string;
+    _id: string;
     name: string;
     owner: string;
     date: Date;
@@ -33,38 +33,71 @@ export declare namespace Entity {
     items: string[];
   }
   export interface Dish {
-    id: string;
+    _id: string;
     name: string;
     images: string[];
     materials: Entity.FoodDetail[];
     information: string;
     owner: string;
   }
+  export interface DishDetail {
+    _id: string;
+    name: string;
+    images: string[];
+    materials: Entity.FoodDetail[];
+    information: string;
+    owner: Entity.User;
+    createdAt: Date;
+    updatedAt: Date;
+  }
   export interface FavDish {
+    _id: string;
     user: string;
     dish: string;
   }
+  export interface FavDishDetail {
+    _id: string;
+    user: string;
+    dish: Entity.DishDetail;
+  }
   export interface SharedShoppingLists {
+    _id: string;
     group: string;
     list: string;
   }
   export interface FoodDetail {
-    food: string;
+    _id: string;
+    food: Entity.Food;
     unit: string;
     quantity: number;
   }
+  export interface Food {
+    _id: string;
+    name: string;
+    image: string;
+    unit: string[];
+    duration: number;
+  }
   export interface Ingredient {
-    id: string;
+    _id: string;
     name: string;
     image: string;
     unit: string;
     duration: number;
   }
   export interface Meal {
-    id: string;
+    _id: string;
     date: Date;
     images: string[];
     name: string;
     dishes: string[];
+  }
+  export interface RefrigeratorFood {
+    _id: string;
+    food: string;
+    quantity: number;
+    unit: string;
+    note: string;
+    expired: Date;
   }
 }

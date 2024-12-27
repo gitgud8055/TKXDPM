@@ -7,7 +7,8 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   if (!token) return next(new APIError(401, "Unauthorized"));
   try {
     const user = deps.User.decodeToken(token);
-    req.user = await deps.User.get(user);
+    res.locals.user = await deps.User.get(user);
+    next();
   } catch (error) {
     next(new APIError(403, "Forbidden"));
   }

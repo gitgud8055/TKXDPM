@@ -9,11 +9,11 @@ export default class implements WSEvent<"UPDATE_USER"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { token, username, avatar, phone }: WS.Params.updateUser
+    { username, avatar, phone }: WS.Params.updateUser
   ) {
-    const id = deps.WSGuard.decodeToken(token);
+    const _id = client.data.userId;
     const updatedUser = await deps.User.update({
-      id,
+      _id,
       username,
       avatar,
       phone,
