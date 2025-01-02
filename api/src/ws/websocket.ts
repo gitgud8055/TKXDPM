@@ -35,6 +35,7 @@ export class Websocket {
         const cookies = socket.handshake.headers.cookie;
         const token = parse(cookies!)["access_token"];
         socket.data.userId = deps.WSGuard.decodeToken(token!);
+        console.log("on middleware: ", token, socket.data.userId, socket.id);
         next();
       } catch (error) {
         console.log("Error: ", error);
@@ -42,8 +43,31 @@ export class Websocket {
       }
     });
 
-    this.io.on("connection", (client) => {
-      console.log(client.id);
+    this.io.on("connection", async (client) => {
+      const user = client.data.userId;
+      let cnt = 0;
+      while (cnt >= 0) {
+        try {
+          cnt++;
+          if (cnt >= 10) {
+            client.disconnect();
+            return;
+          }
+          const group = await deps.GroupMembers.getByUserId(user);
+          console.log(
+            "Joined: ",
+            group.map((x) => x.group!.toString())
+          );
+          group.forEach((member) => {
+            client.join(member.group!.toString());
+          });
+          client.join(user);
+          cnt = -1;
+        } catch {}
+      }
+      client.on("disconnect", async () => {
+        console.log("Disconnect: ", client.id);
+      });
       for (const event of this.events.values()) {
         client.on(event.on, async (data: any) => {
           try {

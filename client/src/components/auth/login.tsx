@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Store } from "@gitgud/types";
 import Wrapper from "../pages/wrapper";
 import { login, actions as auth } from "@/store/auth";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
+import Navigate from "../utils/reload-ws-navigate";
 import "./login.css";
 
 const Login = () => {

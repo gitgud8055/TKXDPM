@@ -24,6 +24,12 @@ export declare namespace REST {
         groups: Entity.Group[];
         favs: Entity.FavDish[];
         dish: Entity.DishDetail[];
+        members: Entity.GroupMemberDetail[];
+      };
+    }
+    export interface POST {
+      "/api/upload": {
+        name: string;
       };
     }
   }

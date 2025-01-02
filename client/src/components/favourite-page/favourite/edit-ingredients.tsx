@@ -40,11 +40,12 @@ declare module "@mui/x-data-grid" {
     setRowModesModel: (
       newModel: (oldModel: GridRowModesModel) => GridRowModesModel
     ) => void;
+    setNewRow: (old) => void;
   }
 }
 
 function EditToolbar(props: GridSlotProps["toolbar"]) {
-  const { setRows, setRowModesModel } = props;
+  const { setRows, setRowModesModel, setNewRow } = props;
 
   const handleClick = () => {
     const id = randomId();
@@ -54,7 +55,11 @@ function EditToolbar(props: GridSlotProps["toolbar"]) {
     ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
+      [id]: { mode: GridRowModes.Edit },
+    }));
+    setNewRow((old) => ({
+      ...old,
+      [id]: true,
     }));
   };
 
@@ -71,15 +76,14 @@ interface IngredientsProps {
   materials: Entity.FoodDetail[];
   rootId: string;
 }
-
-export default function EditIngredients({
-  materials,
-  rootId,
-}: IngredientsProps) {
+export default React.memo(EditIngredients);
+function EditIngredients({ materials, rootId }: IngredientsProps) {
+  console.log("rendered1");
   const dispatch: any = useDispatch();
   const initialRows: GridRowsProp = materials.map((item) => {
     return {
-      id: item._id,
+      id: randomId(),
+      _id: item._id,
       name: item.food.name,
       quantity: item.quantity,
       unit: item.unit,
@@ -90,6 +94,7 @@ export default function EditIngredients({
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
     {}
   );
+  const [newRow, setNewRow] = React.useState({});
 
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
     params,
@@ -122,7 +127,7 @@ export default function EditIngredients({
                 event: "DELETE_DISH_MAT",
                 data: {
                   id: rootId,
-                  materialId: id,
+                  materialId: rows.find((row) => row.id === id)!._id,
                 },
               })
             );
@@ -147,14 +152,14 @@ export default function EditIngredients({
 
   const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = { ...newRow, isNew: false };
-    console.log(newRow);
+    setNewRow((prev) => ({ ...prev, [newRow.id]: false }));
     dispatch(
       api.wsCallBegan({
         event: "UPDATE_DISH_MAT",
         data: {
           id: rootId,
           material: {
-            _id: newRow.id,
+            _id: newRow._id,
             name: newRow.name,
             quantity: newRow.quantity,
             unit: newRow.unit,
@@ -171,7 +176,7 @@ export default function EditIngredients({
   };
 
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", width: 180 },
+    { field: "name", headerName: "Name", width: 180, editable: true },
     {
       field: "quantity",
       headerName: "Quantity",
@@ -252,6 +257,7 @@ export default function EditIngredients({
       sx={{
         maxHeight: "400px",
         width: "500px",
+        maxWidth: "100%",
         "& .actions": {
           color: "text.secondary",
         },
@@ -269,9 +275,13 @@ export default function EditIngredients({
         onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
         slots={{ toolbar: EditToolbar }}
-        slotProps={{
-          toolbar: { setRows, setRowModesModel },
+        isCellEditable={(params) => {
+          return newRow[params.id] === true || params.field !== "name";
         }}
+        slotProps={{
+          toolbar: { setRows, setRowModesModel, setNewRow },
+        }}
+        hideFooterSelectedRowCount
       />
     </Box>
   );

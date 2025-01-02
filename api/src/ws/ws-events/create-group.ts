@@ -11,7 +11,11 @@ export default class CreateGroupEvent implements WSEvent<"CREATE_GROUP"> {
     client: Socket,
     { groupName, groupAvatar }: WS.Params.createGroup
   ) {
-    await deps.Groups.create({ name: groupName, avatar: groupAvatar });
+    await deps.Groups.create({
+      name: groupName,
+      avatar: groupAvatar,
+      owner: client.data.userId,
+    });
     return [];
   }
 }

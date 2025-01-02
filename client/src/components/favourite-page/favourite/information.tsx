@@ -6,10 +6,14 @@ import Divider from "@mui/material/Divider";
 interface InformationProps {
   infor: string;
   editMode: boolean;
+  onChange: (e) => void;
 }
-export default function Information({ infor, editMode }: InformationProps) {
-  const data = infor.split("\\n\\n").map((item) => item.split("\\n"));
-  console.log(data);
+export default function Information({
+  infor,
+  editMode,
+  onChange,
+}: InformationProps) {
+  const data = infor.split("\n\n").map((item) => item.split("\n"));
 
   const content = () => (
     <Root sx={{ width: "500px", maxWidth: "100%" }} className="mt-8 p-4">
@@ -21,7 +25,7 @@ export default function Information({ infor, editMode }: InformationProps) {
             <Box className="pt-3 pb-3">
               {item.map((item, index) => (
                 <Typography key={index + "subtitle"}>
-                  {item[0].toUpperCase() + item.slice(1)}
+                  {item.length > 0 ? item[0].toUpperCase() + item.slice(1) : ""}
                 </Typography>
               ))}
             </Box>
@@ -32,7 +36,10 @@ export default function Information({ infor, editMode }: InformationProps) {
   const editContent = () => (
     <Box
       component={"form"}
-      sx={{ "& .MuiTextField-root": { m: 1, width: "500px" } }}
+      sx={{
+        "& .MuiTextField-root": { m: 1, width: "500px", maxWidth: "100%" },
+        maxWidth: "100%",
+      }}
       noValidate
       autoComplete="off"
       className="mt-8"
@@ -42,6 +49,7 @@ export default function Information({ infor, editMode }: InformationProps) {
         label="Information"
         multiline
         defaultValue={infor}
+        onChange={onChange}
       />
     </Box>
   );

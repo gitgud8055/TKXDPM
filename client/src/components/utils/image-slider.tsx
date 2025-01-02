@@ -22,12 +22,11 @@ const responsive = {
 
 interface ImageSlideProps {
   images?: string[];
-  editMode: boolean;
 }
-export default function ImageSlider({ images, editMode }: ImageSlideProps) {
+export default function ImageSlider({ images }: ImageSlideProps) {
   if (!images || images.length === 0) return null;
   console.log("rendered");
-  return !editMode ? (
+  return (
     <Carousel
       responsive={responsive}
       ssr
@@ -46,7 +45,5 @@ export default function ImageSlider({ images, editMode }: ImageSlideProps) {
         />
       ))}
     </Carousel>
-  ) : (
-    <></>
   );
 }

@@ -1,4 +1,4 @@
-import { WS } from "@gitgud/types";
+import { REST, WS } from "@gitgud/types";
 import { createAction, createSlice } from "@reduxjs/toolkit";
 
 export const actions = {
@@ -36,5 +36,23 @@ const slice = createSlice({
     },
   },
 });
+
+export const uploadFile =
+  (file: File, callback?: (args: REST.From.POST["/api/upload"]) => any) =>
+  (dispatch) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    dispatch(
+      actions.restCallBegan({
+        method: "post",
+        url: "/api/upload",
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        callback,
+      })
+    );
+  };
 
 export default slice.reducer;

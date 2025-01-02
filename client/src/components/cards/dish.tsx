@@ -11,7 +11,6 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Entity } from "@gitgud/types";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFav, getFavouriteDishes, createFav } from "@/store/favs";
@@ -73,11 +72,11 @@ export default function RecipeReviewCard({ data }: ReceiptType) {
               src={`/avatars/${author}`}
             ></Avatar>
           }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          }
+          // action={
+          //   <IconButton aria-label="settings">
+          //     <MoreVertIcon />
+          //   </IconButton>
+          // }
           title={dishName}
           subheader={
             createAt &&
@@ -91,8 +90,8 @@ export default function RecipeReviewCard({ data }: ReceiptType) {
         {thumbnail && (
           <CardMedia
             component="img"
-            height="194"
-            image={`attachments/${thumbnail}`}
+            className="h-[194px]"
+            image={`/attachments/${thumbnail}`}
             alt={dishName}
           />
         )}
@@ -148,69 +147,6 @@ export default function RecipeReviewCard({ data }: ReceiptType) {
                     key={item._id}
                   >{`${item.quantity} ${item.unit} ${item.food.name}`}</Typography>
                 ))}
-                <Typography>
-                  asldkj falsdk asld;fk jsadl kjsad;lf jsadl; jdal; jdsl; jald;j
-                  fsdla;jfld ;sajl; jsdl f;jadlf jsadlf jadl fjasdlfj aldfj
-                  asld; jflkjcvlkxczjv lkjalskjvxcl kjzlxcvj lcxjv ljalkjdf
-                  lkjdfl kjadl; jal;djal;kfj la;sskfj s;lafj ;sldfj ladfj;sldajf
-                  l;sdjf l;dasjf l;sadjf ;lsdajf ;ldaj f;lsdj fl;dja fl;jad;l
-                  fjdafljsad;fl jsasldkj falsdk asld;fk jsadl kjsad;lf jsadl;
-                  jdal; jdsl; jald;j fsdla;jfld ;sajl; jsdl f;jadlf jsadlf jadl
-                  fjasdlfj aldfj asld; jflkjcvlkxczjv lkjalskjvxcl kjzlxcvj
-                  lcxjv ljalkjdf lkjdfl kjadl; jal;djal;kfj la;sskfj s;lafj
-                  ;sldfj ladfj;sldajf l;sdjf l;dasjf l;sadjf ;lsdajf ;ldaj
-                  f;lsdj fl;dja fl;jad;l fjdafljsad;fl jsasldkj falsdk asld;fk
-                  jsadl kjsad;lf jsadl; jdal; jdsl; jald;j fsdla;jfld ;sajl;
-                  jsdl f;jadlf jsadlf jadl fjasdlfj aldfj asld; jflkjcvlkxczjv
-                  lkjalskjvxcl kjzlxcvj lcxjv ljalkjdf lkjdfl kjadl;
-                  jal;djal;kfj la;sskfj s;lafj ;sldfj ladfj;sldajf l;sdjf
-                  l;dasjf l;sadjf ;lsdajf ;ldaj f;lsdj fl;dja fl;jad;l
-                  fjdafljsad;fl jsasldkj falsdk asld;fk jsadl kjsad;lf jsadl;
-                  jdal; jdsl; jald;j fsdla;jfld ;sajl; jsdl f;jadlf jsadlf jadl
-                  fjasdlfj aldfj asld; jflkjcvlkxczjv lkjalskjvxcl kjzlxcvj
-                  lcxjv ljalkjdf lkjdfl kjadl; jal;djal;kfj la;sskfj s;lafj
-                  ;sldfj ladfj;sldajf l;sdjf l;dasjf l;sadjf ;lsdajf ;ldaj
-                  f;lsdj fl;dja fl;jad;l fjdafljsad;fl jsasldkj falsdk asld;fk
-                  jsadl kjsad;lf jsadl; jdal; jdsl; jald;j fsdla;jfld ;sajl;
-                  jsdl f;jadlf jsadlf jadl fjasdlfj aldfj asld; jflkjcvlkxczjv
-                  lkjalskjvxcl kjzlxcvj lcxjv ljalkjdf lkjdfl kjadl;
-                  jal;djal;kfj la;sskfj s;lafj ;sldfj ladfj;sldajf l;sdjf
-                  l;dasjf l;sadjf ;lsdajf ;ldaj f;lsdj fl;dja fl;jad;l
-                  fjdafljsad;fl jsasldkj falsdk asld;fk jsadl kjsad;lf jsadl;
-                  jdal; jdsl; jald;j fsdla;jfld ;sajl; jsdl f;jadlf jsadlf jadl
-                  fjasdlfj aldfj asld; jflkjcvlkxczjv lkjalskjvxcl kjzlxcvj
-                  lcxjv ljalkjdf lkjdfl kjadl; jal;djal;kfj la;sskfj s;lafj
-                  ;sldfj ladfj;sldajf l;sdjf l;dasjf l;sadjf ;lsdajf ;ldaj
-                  f;lsdj fl;dja fl;jad;l fjdafljsad;fl jsasldkj falsdk asld;fk
-                  jsadl kjsad;lf jsadl; jdal; jdsl; jald;j fsdla;jfld ;sajl;
-                  jsdl f;jadlf jsadlf jadl fjasdlfj aldfj asld; jflkjcvlkxczjv
-                  lkjalskjvxcl kjzlxcvj lcxjv ljalkjdf lkjdfl kjadl;
-                  jal;djal;kfj la;sskfj s;lafj ;sldfj ladfj;sldajf l;sdjf
-                  l;dasjf l;sadjf ;lsdajf ;ldaj f;lsdj fl;dja fl;jad;l
-                  fjdafljsad;fl jsasldkj falsdk asld;fk jsadl kjsad;lf jsadl;
-                  jdal; jdsl; jald;j fsdla;jfld ;sajl; jsdl f;jadlf jsadlf jadl
-                  fjasdlfj aldfj asld; jflkjcvlkxczjv lkjalskjvxcl kjzlxcvj
-                  lcxjv ljalkjdf lkjdfl kjadl; jal;djal;kfj la;sskfj s;lafj
-                  ;sldfj ladfj;sldajf l;sdjf l;dasjf l;sadjf ;lsdajf ;ldaj
-                  f;lsdj fl;dja fl;jad;l fjdafljsad;fl jsasldkj falsdk asld;fk
-                  jsadl kjsad;lf jsadl; jdal; jdsl; jald;j fsdla;jfld ;sajl;
-                  jsdl f;jadlf jsadlf jadl fjasdlfj aldfj asld; jflkjcvlkxczjv
-                  lkjalskjvxcl kjzlxcvj lcxjv ljalkjdf lkjdfl kjadl;
-                  jal;djal;kfj la;sskfj s;lafj ;sldfj ladfj;sldajf l;sdjf
-                  l;dasjf l;sadjf ;lsdajf ;ldaj f;lsdj fl;dja fl;jad;l
-                  fjdafljsad;fl jsasldkj falsdk asld;fk jsadl kjsad;lf jsadl;
-                  jdal; jdsl; jald;j fsdla;jfld ;sajl; jsdl f;jadlf jsadlf jadl
-                  fjasdlfj aldfj asld; jflkjcvlkxczjv lkjalskjvxcl kjzlxcvj
-                  lcxjv ljalkjdf lkjdfl kjadl; jal;djal;kfj la;sskfj s;lafj
-                  ;sldfj ladfj;sldajf l;sdjf l;dasjf l;sadjf ;lsdajf ;ldaj
-                  f;lsdj fl;dja fl;jad;l fjdafljsad;fl jsasldkj falsdk asld;fk
-                  jsadl kjsad;lf jsadl; jdal; jdsl; jald;j fsdla;jfld ;sajl;
-                  jsdl f;jadlf jsadlf jadl fjasdlfj aldfj asld; jflkjcvlkxczjv
-                  lkjalskjvxcl kjzlxcvj lcxjv ljalkjdf lkjdfl kjadl;
-                  jal;djal;kfj la;sskfj s;lafj ;sldfj ladfj;sldajf l;sdjf
-                  l;dasjf l;sadjf ;lsdajf ;ldaj f;lsdj fl;dja fl;jad;l
-                  fjdafljsad;fl js
-                </Typography>
               </Box>
             </Box>
           </Link>

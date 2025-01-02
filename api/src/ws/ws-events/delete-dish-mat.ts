@@ -22,7 +22,7 @@ export default class implements WSEvent<"DELETE_DISH_MAT"> {
     return [
       {
         emit: this.on,
-        to: [client.id],
+        to: [userId],
         data: { id, materialId },
       },
     ];

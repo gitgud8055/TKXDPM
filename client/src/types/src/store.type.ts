@@ -17,6 +17,7 @@ export namespace Store {
       groups: Entity.Group[];
       favs: Entity.FavDish[];
       dish: Entity.DishDetail[];
+      member: Record<string, Entity.User[]>;
     };
   }
 }

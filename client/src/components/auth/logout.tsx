@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { logout } from "@/store/auth";
 
 const Logout = () => {
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   dispatch(logout());
   return <Navigate to={"/login"} />;
 };

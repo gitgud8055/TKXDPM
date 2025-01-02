@@ -19,10 +19,16 @@ export default class implements WSEvent<"UPDATE_DISH"> {
     await deps.Dishes.update({
       _id: id,
       name,
-      images,
+      images: dish.images.concat(images),
       information,
     });
 
-    return [];
+    return [
+      {
+        emit: this.on,
+        to: [userId],
+        data: { id, name, images, information },
+      },
+    ];
   }
 }

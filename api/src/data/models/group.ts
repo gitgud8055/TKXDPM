@@ -10,6 +10,10 @@ export default mongoose.model(
         required: [true, "name is required"],
       },
       avatar: String,
+      owner: {
+        type: ObjectId,
+        ref: "User",
+      },
       refrigerators: [
         {
           type: ObjectId,

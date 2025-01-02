@@ -21,7 +21,9 @@ export class Groups extends Wrapper {
     return data;
   }
   public getAll(id: string[]) {
-    return group.find({ _id: { $in: id } });
+    return group
+      .find({ _id: { $in: id } })
+      .populate("owner", "username avatar");
   }
   public create(options: Partial<Entity.Group>) {
     return group.create(options);

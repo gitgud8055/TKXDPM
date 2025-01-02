@@ -30,6 +30,10 @@ export declare namespace WS {
     UPDATE_DISH_MAT: Params.updateDishMat;
     DELETE_DISH_MAT: Params.deleteDishMat;
     ADD_DISH_MAT: Params.addDishMat;
+    DELETE_DISH_IMG: Params.deleteDishImg;
+    CREATE_GROUP_MEMBER: Params.createGroupMember;
+    DELETE_GROUP_MEMBER: Params.deleteGroupMember;
+    DELEGATE_MEMBER: Params.delegateMember;
   }
 
   export interface From {
@@ -37,6 +41,10 @@ export declare namespace WS {
     DELETE_FAV_DISH: Args.deleteFavDish;
     UPDATE_DISH_MAT: Args.updateDishMat;
     DELETE_DISH_MAT: Args.deleteDishMat;
+    DELETE_DISH_IMG: Args.deleteDishImg;
+    UPDATE_DISH: Args.updateDish;
+    DELEGATE_MEMBER: Args.delegateMember;
+    DELETE_GROUP_MEMBER: Args.deleteGroupMember;
   }
 
   export namespace Params {
@@ -166,6 +174,23 @@ export declare namespace WS {
         unit: string;
       };
     }
+    export interface deleteDishImg {
+      id: string;
+      index: number;
+      image: string;
+    }
+    export interface createGroupMember {
+      groupId: string;
+      userId: string;
+    }
+    export interface deleteGroupMember {
+      groupId: string;
+      userId: string;
+    }
+    export interface delegateMember {
+      id: string;
+      userId: string;
+    }
   }
 
   export namespace Args {
@@ -179,6 +204,24 @@ export declare namespace WS {
     export interface deleteDishMat {
       id: string;
       materialId: string;
+    }
+    export interface deleteDishImg {
+      id: string;
+      index: string;
+    }
+    export interface updateDish {
+      id: string;
+      name: string;
+      images: string[];
+      information: string;
+    }
+    export interface delegateMember {
+      id: string;
+      user: Entity.User;
+    }
+    export interface deleteGroupMember {
+      id: string;
+      user: string;
     }
   }
 }

@@ -13,7 +13,18 @@ export declare namespace Entity {
     _id: string;
     name: string;
     avatar: string;
+    owner: Entity.User;
     refrigerators: string[];
+  }
+  export interface GroupMember {
+    _id: string;
+    group: string;
+    user: string;
+  }
+  export interface GroupMemberDetail {
+    _id: string;
+    group: string;
+    user: Entity.User;
   }
   export interface ShoppingFood {
     _id: string;

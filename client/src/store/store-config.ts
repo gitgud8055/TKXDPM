@@ -10,6 +10,7 @@ import groups from "./groups";
 import favs from "./favs";
 import dish from "./dish";
 import ws from "./middlewares/ws";
+import member from "./group-members";
 
 const combinedReducer = combineReducers({
   auth,
@@ -19,6 +20,7 @@ const combinedReducer = combineReducers({
     groups,
     favs,
     dish,
+    member,
   }),
 });
 

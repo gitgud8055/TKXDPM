@@ -1,10 +1,11 @@
+import { GroupMembers } from "./../data/group-members";
 import { WSGuard } from "./../ws/modules/ws-guard";
 import { FavDishes } from "./../data/fav-dishes";
 import { RefrigeratorFoods } from "../data/refrigerator-foods";
 import { Meals } from "./../data/meals";
 import { ShoppingFoods } from "../data/shopping-foods";
 import { ShoppingList } from "../data/shopping-lists";
-import { SharedShoppingLists } from "./../data/shared-shopping-lists";
+import { SharedShoppingLists } from "../data/shared-shopping-lists";
 import { Groups } from "../data/groups";
 import { User } from "../data/users";
 import { Foods } from "../data/foods";
@@ -26,6 +27,7 @@ export interface Deps {
   Meals: Meals;
   RefrigeratorFoods: RefrigeratorFoods;
   FavDishes: FavDishes;
+  GroupMembers: GroupMembers;
 }
 
 const deps = {
@@ -42,6 +44,7 @@ const deps = {
   Meals: new Meals(),
   RefrigeratorFoods: new RefrigeratorFoods(),
   FavDishes: new FavDishes(),
+  GroupMembers: new GroupMembers(),
 };
 
 global.deps = deps;

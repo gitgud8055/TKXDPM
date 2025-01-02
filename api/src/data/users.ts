@@ -16,7 +16,6 @@ export class User extends Wrapper {
       password,
       username,
       phone,
-      avatar: "",
       role: "user",
       groups: [],
     });

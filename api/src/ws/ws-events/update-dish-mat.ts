@@ -27,7 +27,7 @@ export default class implements WSEvent<"UPDATE_DISH_MAT"> {
     return [
       {
         emit: this.on,
-        to: [client.id],
+        to: [userId],
         data: { id, material },
       },
     ];

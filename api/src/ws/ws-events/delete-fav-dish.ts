@@ -22,7 +22,7 @@ export default class implements WSEvent<"DELETE_FAV_DISH"> {
     return [
       {
         emit: this.on,
-        to: [client.id],
+        to: [user],
         data: { id },
       },
     ];
