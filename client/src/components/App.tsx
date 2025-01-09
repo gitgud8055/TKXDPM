@@ -8,6 +8,7 @@ import Homepage from "./pages/homepage";
 import FavouritePage from "./pages/favourite-page";
 import GroupPage from "./pages/group-page";
 import Test from "./pages/test";
+import ShoppingPage from "./pages/shopping-page";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/dashboard" element={<Homepage />} />
           <Route path="groups/:id?" element={<GroupPage />} />
           <Route path="favourites/:id?" element={<FavouritePage />} />
+          <Route path="shoppings" element={<ShoppingPage />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Route>
         {/* <Route path="*" element={<Navigate to="/login" />} /> */}

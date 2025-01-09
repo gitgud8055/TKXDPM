@@ -25,6 +25,7 @@ export declare namespace REST {
         favs: Entity.FavDish[];
         dish: Entity.DishDetail[];
         members: Entity.GroupMemberDetail[];
+        ingredients: Entity.Ingredient[];
       };
     }
     export interface POST {

@@ -58,6 +58,12 @@ const dishSlice = createSlice({
         );
       }
     },
+    addMat: (state, { payload }) => {
+      const idx = state.findIndex((dish) => dish._id === payload.id);
+      if (idx !== -1) {
+        state[idx].materials.push(payload.material);
+      }
+    },
   },
 });
 

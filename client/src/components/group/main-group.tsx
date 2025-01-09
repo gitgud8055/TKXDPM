@@ -1,18 +1,56 @@
 import React from "react";
 import CustomPageContainer from "../utils/custom-page-container";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllGroupWithMembers } from "@/store/groups";
-import { Grid } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  TextField,
+} from "@mui/material";
 import CustomCard from "./card/group-card";
+import AddIcon from "@mui/icons-material/Add";
+import { actions as api } from "@/store/api";
+import AddGroup from "./group/add-group";
 
 const MainGroup = () => {
   const groups = useSelector(getAllGroupWithMembers);
+  const dispatch = useDispatch();
+  const [open, setOpen] = React.useState(false);
   console.log(groups);
-  const dup = (x, cnt) => {
-    return new Array(cnt).fill(x).flat();
+
+  const onClose = () => {
+    setOpen(false);
   };
+
+  const header = React.useCallback(() => {
+    return (
+      <div className="w-full flex flex-row">
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => {
+            // dispatch(
+            //   api.wsCallBegan({
+            //     event: "CREATE_GROUP",
+            //     data: {},
+            //   })
+            // );
+            setOpen(true);
+          }}
+        >
+          Add group
+        </Button>
+      </div>
+    );
+  }, []);
   return (
-    <CustomPageContainer breadcrumbs={[]}>
+    <CustomPageContainer breadcrumbs={[]} slots={{ header }} addHeader>
+      <AddGroup open={open} onClose={onClose}></AddGroup>
       <Grid container spacing={4}>
         {groups &&
           groups.map((group) => (
@@ -23,12 +61,7 @@ const MainGroup = () => {
                 title={group.name}
                 subtitle={`Created by ${group.owner.username}`}
                 members={group.members!}
-                description={
-                  <>
-                    <b>Shining Alpaca</b> and 3 others are already members of
-                    this group.
-                  </>
-                }
+                description={group.description}
               />
             </Grid>
           ))}

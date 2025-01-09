@@ -12,7 +12,8 @@ export const favsSlice = createSlice({
       return payload;
     },
     add: (state, { payload }) => {
-      state.push(...notInArray(state, payload));
+      state.push(payload);
+      // state.push(...notInArray(state, payload));
     },
     delete: (state, { payload }) => {
       const index = state.findIndex((fav) => fav._id === payload);

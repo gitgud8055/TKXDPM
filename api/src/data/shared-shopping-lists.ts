@@ -9,6 +9,9 @@ export class SharedShoppingLists extends Wrapper {
   public getDetail(id: string) {
     return this.get(id).populate(["list"]);
   }
+  public getInvidual(options: Partial<Entity.SharedShoppingLists>) {
+    return sharedShoppingList.findOne(options).populate(["list"]);
+  }
   public getByGroupId(groupId: string) {
     return sharedShoppingList.find({ group: groupId });
   }

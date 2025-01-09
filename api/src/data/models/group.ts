@@ -14,6 +14,7 @@ export default mongoose.model(
         type: ObjectId,
         ref: "User",
       },
+      description: String,
       refrigerators: [
         {
           type: ObjectId,

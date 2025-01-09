@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Entity } from "@gitgud/types";
 import { TextField, Tooltip } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actions as api } from "@/store/api";
 
 import Box from "@mui/material/Box";
@@ -33,6 +33,7 @@ import {
   randomArrayItem,
 } from "@mui/x-data-grid-generator";
 import { openDialog } from "@/store/ui";
+import { getIngredientsSpecial } from "@/store/ingredients";
 
 declare module "@mui/x-data-grid" {
   interface ToolbarPropsOverrides {
@@ -80,6 +81,7 @@ export default React.memo(EditIngredients);
 function EditIngredients({ materials, rootId }: IngredientsProps) {
   console.log("rendered1");
   const dispatch: any = useDispatch();
+  const ingredients = useSelector(getIngredientsSpecial);
   const initialRows: GridRowsProp = materials.map((item) => {
     return {
       id: randomId(),
@@ -150,24 +152,41 @@ function EditIngredients({ materials, rootId }: IngredientsProps) {
     }
   };
 
-  const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = { ...newRow, isNew: false };
-    setNewRow((prev) => ({ ...prev, [newRow.id]: false }));
-    dispatch(
-      api.wsCallBegan({
-        event: "UPDATE_DISH_MAT",
-        data: {
-          id: rootId,
-          material: {
-            _id: newRow._id,
-            name: newRow.name,
-            quantity: newRow.quantity,
-            unit: newRow.unit,
+  const processRowUpdate = (NewRow: GridRowModel) => {
+    const updatedRow = { ...NewRow, isNew: false };
+    if (newRow[NewRow.id] === true) {
+      dispatch(
+        api.wsCallBegan({
+          event: "ADD_DISH_MAT",
+          data: {
+            id: rootId,
+            material: {
+              food: NewRow.name,
+              quantity: NewRow.quantity,
+              unit: NewRow.unit,
+            },
+            rowId: NewRow.id,
           },
-        },
-      })
-    );
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+        })
+      );
+    } else {
+      dispatch(
+        api.wsCallBegan({
+          event: "UPDATE_DISH_MAT",
+          data: {
+            id: rootId,
+            material: {
+              _id: NewRow._id,
+              name: NewRow.name,
+              quantity: NewRow.quantity,
+              unit: NewRow.unit,
+            },
+          },
+        })
+      );
+    }
+    setNewRow((prev) => ({ ...prev, [NewRow.id]: false }));
+    setRows(rows.map((row) => (row.id === NewRow.id ? updatedRow : row)));
     return updatedRow;
   };
 
@@ -176,7 +195,16 @@ function EditIngredients({ materials, rootId }: IngredientsProps) {
   };
 
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", width: 180, editable: true },
+    {
+      field: "name",
+      headerName: "Name",
+      width: 180,
+      editable: true,
+      type: "singleSelect",
+      valueOptions: () => {
+        return ingredients.names;
+      },
+    },
     {
       field: "quantity",
       headerName: "Quantity",
@@ -193,7 +221,10 @@ function EditIngredients({ materials, rootId }: IngredientsProps) {
       editable: true,
       type: "singleSelect",
       valueOptions: (params) => {
-        return params.row.acceptedUnit;
+        if (params.row.acceptedUnit) return params.row.acceptedUnit;
+        const food = ingredients.data.get(params.row.name);
+        if (!food) return [];
+        return food.unit;
       },
     },
     {

@@ -34,6 +34,10 @@ export declare namespace WS {
     CREATE_GROUP_MEMBER: Params.createGroupMember;
     DELETE_GROUP_MEMBER: Params.deleteGroupMember;
     DELEGATE_MEMBER: Params.delegateMember;
+    ADD_MEMBER: Params.addMember;
+    ADD_SHOPPING_FOOD: Params.addShoppingFood;
+    DELETE_SHOPPING_FOOD: Params.deleteShoppingFood;
+    ADD_FOOD: Params.addFood;
   }
 
   export interface From {
@@ -45,6 +49,11 @@ export declare namespace WS {
     UPDATE_DISH: Args.updateDish;
     DELEGATE_MEMBER: Args.delegateMember;
     DELETE_GROUP_MEMBER: Args.deleteGroupMember;
+    ADD_DISH_MAT: Args.addDishMat;
+    UPDATE_USER: Args.updateUser;
+    CREATE_FAV_DISH: Args.createFavDish;
+    ADD_MEMBER: Args.addMember;
+    CREATE_DISH: Args.createDish;
   }
 
   export namespace Params {
@@ -54,6 +63,7 @@ export declare namespace WS {
     export interface createGroup {
       groupName: string;
       groupAvatar: string;
+      description: string;
     }
     export interface updateGroup {
       groupId: string;
@@ -80,18 +90,20 @@ export declare namespace WS {
     export interface updateUser {
       username: string;
       avatar: string;
-      phone: string;
+      // phone: string;
     }
     export interface createShoppingList {
       name: string;
       date: Date;
       note: string;
-      items: Partial<Entity.ShoppingFood>[];
+      // items: Partial<Entity.ShoppingFood>[];
     }
     export interface updateShoppingFood {
+      list: string;
       id: string;
       quantity: number;
       note: string;
+      unit: string;
     }
     export interface createDish {
       name: string;
@@ -132,6 +144,7 @@ export declare namespace WS {
     }
     export interface deleteSharedList {
       id: string;
+      groupId: string;
     }
     export interface createIngredient {
       name: string;
@@ -173,6 +186,7 @@ export declare namespace WS {
         quantity: number;
         unit: string;
       };
+      rowId: string;
     }
     export interface deleteDishImg {
       id: string;
@@ -190,6 +204,28 @@ export declare namespace WS {
     export interface delegateMember {
       id: string;
       userId: string;
+    }
+    export interface addMember {
+      groupId: string;
+      userId: string;
+    }
+    export interface addShoppingFood {
+      list: string;
+      id: string;
+      quantity: number;
+      unit: string;
+      note: string;
+      name: string;
+    }
+    export interface deleteShoppingFood {
+      list: string;
+      id: string;
+    }
+    export interface addFood {
+      name: string;
+      image: string;
+      unit: string[];
+      duration: number;
     }
   }
 
@@ -222,6 +258,26 @@ export declare namespace WS {
     export interface deleteGroupMember {
       id: string;
       user: string;
+    }
+    export interface addDishMat {
+      id: string;
+      material: Entity.FoodDetail;
+    }
+    export interface updateUser {
+      username: string;
+      avatar: string;
+    }
+    export interface createFavDish {
+      dish: Entity.DishDetail;
+      fav: Entity.FavDish;
+    }
+    export interface addMember {
+      id: string;
+      user: Entity.User;
+    }
+    export interface createDish {
+      data: Entity.DishDetail;
+      fav: Entity.FavDish;
     }
   }
 }

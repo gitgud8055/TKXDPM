@@ -67,7 +67,7 @@ export default function RecipeReviewCard({ data }: ReceiptType) {
         <CardHeader
           avatar={
             <Avatar
-              sx={{ bgcolor: red[500] }}
+              // sx={{ bgcolor: red[500] }}
               aria-label="recipe"
               src={`/avatars/${author}`}
             ></Avatar>

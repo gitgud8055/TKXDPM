@@ -1,23 +1,10 @@
-import * as React from "react";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import React from "react";
+import UpdateUser from "../utils/update-user";
 
-export default function DisabledTabs() {
-  const [value, setValue] = React.useState(2);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
+export default function test() {
   return (
-    <Tabs
-      value={value}
-      onChange={handleChange}
-      aria-label="disabled tabs example"
-    >
-      <Tab label="Active" />
-      <Tab label="Disabled" disabled />
-      <Tab label="Active" />
-    </Tabs>
+    <div>
+      <UpdateUser />
+    </div>
   );
 }

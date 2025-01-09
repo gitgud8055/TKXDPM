@@ -19,6 +19,9 @@ export const authSlice = createSlice({
       state.loading = false;
       state.user = payload;
     },
+    update: (state, { payload }) => {
+      state.user = { ...state.user, ...payload };
+    },
     attemptFailed: (state) => {
       state.loading = false;
     },
@@ -89,4 +92,4 @@ export const logout = () => (dispatch) => {
   );
 };
 
-export const getSelf = (state) => state.auth.user;
+export const getSelf = (state: Store.AppState) => state.auth.user;

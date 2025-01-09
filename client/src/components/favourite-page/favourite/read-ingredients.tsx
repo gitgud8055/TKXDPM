@@ -58,7 +58,15 @@ export default function ReadIngredients({ materials }: IngredientsProps) {
             : materials
           ).map((row) => (
             <tr key={row._id}>
-              <td>{row.food.name}</td>
+              <td className="flex flex-row gap-2">
+                <img
+                  src={`/avatars/${row.food.image}`}
+                  height={30}
+                  width={30}
+                  alt=""
+                />
+                {row.food.name}
+              </td>
               <td style={{ width: 120 }} align="right">
                 {row.quantity}
               </td>

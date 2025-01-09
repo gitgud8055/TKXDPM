@@ -1,14 +1,18 @@
 import React, { useEffect } from "react";
 import Dish from "../cards/dish";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CustomPageContainer from "../utils/custom-page-container";
 import SearchBar from "../utils/search-bar-auto";
 import { selectFavDish } from "@/store/dish";
+import { Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import { actions as api } from "@/store/api";
 
 const Mainpage = () => {
   const favDishes = useSelector(selectFavDish);
   const [list, setList] = React.useState(favDishes);
   const [search, setSearch] = React.useState("");
+  const dispatch: any = useDispatch();
   console.log(favDishes);
 
   useEffect(() => {
@@ -21,7 +25,7 @@ const Mainpage = () => {
 
   const header = React.useCallback(() => {
     return (
-      <div className="w-full">
+      <div className="w-full flex flex-row">
         <SearchBar
           onTrigger={(data) => {
             setSearch(data);
@@ -33,6 +37,20 @@ const Mainpage = () => {
             );
           }}
         />
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => {
+            dispatch(
+              api.wsCallBegan({
+                event: "CREATE_DISH",
+                data: {},
+              })
+            );
+          }}
+        >
+          Add dish
+        </Button>
       </div>
     );
   }, []);

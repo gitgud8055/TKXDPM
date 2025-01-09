@@ -11,28 +11,49 @@ export default class implements WSEvent<"CREATE_DISH"> {
     client: Socket,
     { name, images, materials, information }: WS.Params.createDish
   ) {
-    const userId = client.data.userId;
-    const foodIds = (
-      await deps.Foods.getList(materials.map((x) => x.food))
-    ).reduce((m, obj) => {
-      m[obj._id.toString()] = obj.unit;
-      return m;
-    }, {} as Record<string, string[]>);
-    materials = materials.filter(
-      (x) =>
-        x.food !== undefined &&
-        x.unit !== undefined &&
-        x.food in foodIds &&
-        foodIds[x.food].includes(x.unit)
-    );
-    const dish = await deps.Dishes.create({
-      name,
-      images,
-      materials,
-      information,
-      owner: userId,
+    const user = client.data.userId;
+    const data = await deps.Dishes.create({
+      images: [],
+      materials: [],
+      information: "",
+      name: "",
+      owner: user,
     });
+    const fav = await deps.FavDishes.create({
+      dish: data._id.toString(),
+      user: user,
+    });
+    // const userId = client.data.userId;
+    // const foodIds = (
+    //   await deps.Foods.getList(materials.map((x) => x.food))
+    // ).reduce((m, obj) => {
+    //   m[obj._id.toString()] = obj.unit;
+    //   return m;
+    // }, {} as Record<string, string[]>);
+    // materials = materials.filter(
+    //   (x) =>
+    //     x.food !== undefined &&
+    //     x.unit !== undefined &&
+    //     x.food in foodIds &&
+    //     foodIds[x.food].includes(x.unit)
+    // );
+    // const dish = await deps.Dishes.create({
+    //   name,
+    //   images,
+    //   materials,
+    //   information,
+    //   owner: userId,
+    // });
 
-    return [];
+    return [
+      {
+        emit: this.on,
+        to: [user],
+        data: {
+          data: await data.populate("owner"),
+          fav,
+        },
+      },
+    ];
   }
 }

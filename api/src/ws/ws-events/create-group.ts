@@ -9,12 +9,17 @@ export default class CreateGroupEvent implements WSEvent<"CREATE_GROUP"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { groupName, groupAvatar }: WS.Params.createGroup
+    { groupName, groupAvatar, description }: WS.Params.createGroup
   ) {
-    await deps.Groups.create({
+    const group = await deps.Groups.create({
       name: groupName,
       avatar: groupAvatar,
       owner: client.data.userId,
+      description,
+    });
+    await deps.GroupMembers.create({
+      user: client.data.userId,
+      group: group._id.toString(),
     });
     return [];
   }

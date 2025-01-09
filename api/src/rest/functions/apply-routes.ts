@@ -7,6 +7,7 @@ import { router as mealRouter } from "../routes/meal.route";
 import { router as dishRouter } from "../routes/dish.route";
 import { router as userRouter } from "../routes/user.route";
 import { router as imageRouter } from "../routes/image.route";
+import { router as shoppingRouter } from "../routes/shopping-list.router";
 import { resolve } from "path";
 
 export default (app: Application, prefix: string) => {
@@ -22,5 +23,6 @@ export default (app: Application, prefix: string) => {
   app.use(`${prefix}/meals`, mealRouter);
   app.use(`${prefix}/dishes`, dishRouter);
   app.use(`${prefix}/users`, userRouter);
+  app.use(`${prefix}/shopping`, shoppingRouter);
   app.use(`/`, imageRouter);
 };

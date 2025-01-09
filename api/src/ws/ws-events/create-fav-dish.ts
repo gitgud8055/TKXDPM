@@ -12,9 +12,19 @@ export default class implements WSEvent<"CREATE_FAV_DISH"> {
     { dishId }: WS.Params.createFavDish
   ) {
     const userId = client.data.userId;
-    const dish = await deps.Dishes.get(dishId);
-    if (!dish) throw new Error("Dish not found");
-    await deps.FavDishes.create({ dish: dishId, user: userId });
-    return [];
+    const dish = await deps.Dishes.getList([dishId]);
+    console.log(dish);
+    if (!dish[0]) throw new Error("Dish not found");
+    const fav = await deps.FavDishes.create({ dish: dishId, user: userId });
+    return [
+      {
+        emit: this.on,
+        to: [userId],
+        data: {
+          dish: dish[0],
+          fav,
+        },
+      },
+    ];
   }
 }

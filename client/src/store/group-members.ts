@@ -18,7 +18,8 @@ const groupMembersSlice = createSlice({
       return state;
     },
     add: (state, { payload }) => {
-      add(state, payload);
+      console.log(payload);
+      state[payload.id].push(payload.user);
     },
     remove: (state, { payload }) => {
       console.log(payload, JSON.parse(JSON.stringify(state[payload.id])));

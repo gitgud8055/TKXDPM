@@ -11,7 +11,9 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { getGroupMembers } from "@/store/group-members";
-import ListMember from "./card/list-member";
+import ListMember from "./group/list-member";
+import Refrigerator from "./group/refrigerator";
+import ShoppingPage from "./shopping";
 
 const TabItem = styled(Tab)(({ theme }) => ({
   textTransform: "initial",
@@ -39,9 +41,9 @@ const TabItem = styled(Tab)(({ theme }) => ({
 const Group = ({ id }) => {
   const activePage = useActivePage();
   const group = useSelector((state) => getGroups(state, id));
-  const members = useSelector((state) => getGroupMembers(state, id));
+
   const [tabIndex, setTabIndex] = React.useState("0");
-  console.log(group, members, id);
+  console.log(group, id);
   if (!activePage || !group) return <Navigate to={"/groups"} />;
   const breadcrumbs: Breadcrumb[] = [
     ...activePage.breadcrumbs,
@@ -64,16 +66,19 @@ const Group = ({ id }) => {
           centered
         >
           <TabItem disableRipple label={"Members"} value="0" />
-          <TabItem disableRipple label={"Rule"} value="1" />
-          <TabItem disableRipple label={"Indexes"} value="2" />
-          <TabItem disableRipple label={"Usage"} value="3" />
+          <TabItem disableRipple label={"Shopping"} value="1" />
+          {/* <TabItem disableRipple label={"Indexes"} value="2" />
+          <TabItem disableRipple label={"Usage"} value="3" /> */}
         </TabList>
         <TabPanel value="0">
-          {members && <ListMember members={members} group={group} />}
+          <ListMember group={group} />
         </TabPanel>
-        <TabPanel value="1">Item One</TabPanel>
-        <TabPanel value="2">Item Two</TabPanel>
-        <TabPanel value="3">Item Three</TabPanel>
+        <TabPanel value="1">
+          {/* <Refrigerator /> */}
+          <ShoppingPage group={group} />
+        </TabPanel>
+        {/* <TabPanel value="2">Item Two</TabPanel>
+        <TabPanel value="3">Item Three</TabPanel> */}
       </TabContext>
     </CustomPageContainer>
   );

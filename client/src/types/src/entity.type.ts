@@ -14,6 +14,7 @@ export declare namespace Entity {
     name: string;
     avatar: string;
     owner: Entity.User;
+    description: string;
     refrigerators: string[];
   }
   export interface GroupMember {

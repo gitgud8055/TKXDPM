@@ -39,4 +39,5 @@ export interface WSClient {
   disconnect: () => any;
   connect: () => any;
   connected: boolean;
+  removeAllListeners: () => any;
 }

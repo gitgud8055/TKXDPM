@@ -31,10 +31,37 @@ function setupMulterAttachment(app: Application) {
   );
 }
 
+function setupMulterAvartar(app: Application) {
+  const uploadDir = resolve("./assets/avatars");
+  const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, uploadDir);
+    },
+    filename: function (req, file, cb) {
+      cb(null, `${Date.now()}-${file.originalname}`);
+    },
+  });
+
+  const upload = multer({ storage });
+
+  app.post(
+    "/upload/avatar",
+    updateUser,
+    validateUser,
+    upload.single("file"),
+    async (req, res) => {
+      const file = req.file;
+      console.log(file);
+      res.status(200).json({ name: file?.filename });
+    }
+  );
+}
+
 export default (app: Application) => {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(cookieParser());
 
   setupMulterAttachment(app);
+  setupMulterAvartar(app);
 };

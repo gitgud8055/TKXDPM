@@ -13,18 +13,20 @@ router.get("/entities", updateUser, validateUser, async (req, res, next) => {
       deps.GroupMembers.getByUserId(user._id),
     ]);
 
-    const [groups, dish, members] = await Promise.all([
+    const [groups, dish, members, ingredients] = await Promise.all([
       deps.Groups.getAll(groupIds.map((x) => x.group!.toString())),
       deps.Dishes.getList(favs.map((x) => x.dish!.toString())),
       deps.GroupMembers.getDetailByGroupId(
         groupIds.map((x) => x.group!.toString())
       ),
+      deps.Foods.getAll(),
     ]);
     res.status(200).json({
       groups,
       favs,
       dish,
       members,
+      ingredients,
     });
   } catch (error) {
     console.log(error);

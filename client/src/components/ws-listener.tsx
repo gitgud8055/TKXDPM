@@ -10,6 +10,7 @@ import { actions as dish } from "../store/dish";
 import { openDialog } from "../store/ui";
 import { actions as groups } from "../store/groups";
 import { actions as groupMembers } from "../store/group-members";
+import { actions as auth } from "../store/auth";
 
 import ws from "../service/ws-service";
 
@@ -23,7 +24,9 @@ const WSListener = () => {
       ws.connect();
       return;
     }
+    ws.removeAllListeners();
     ws.on("error", (error) => {
+      console.log(error);
       dispatch(
         openDialog({
           variant: "error",
@@ -40,6 +43,17 @@ const WSListener = () => {
     ws.on("UPDATE_DISH", (args) => dispatch(dish.update(args)));
     ws.on("DELEGATE_MEMBER", (args) => dispatch(groups.updateOwner(args)));
     ws.on("DELETE_GROUP_MEMBER", (args) => dispatch(groupMembers.remove(args)));
+    ws.on("ADD_DISH_MAT", (args) => dispatch(dish.addMat(args)));
+    ws.on("UPDATE_USER", (args) => dispatch(auth.update(args)));
+    ws.on("CREATE_FAV_DISH", (args) => {
+      dispatch(favs.add(args.fav));
+      dispatch(dish.add([args.dish]));
+    });
+    ws.on("ADD_MEMBER", (args) => dispatch(groupMembers.add(args)));
+    ws.on("CREATE_DISH", (args) => {
+      dispatch(favs.add(args.fav));
+      dispatch(dish.add([args.data]));
+    });
 
     dispatch(meta.listenedToWS());
   }, [hasListenedToWS]);

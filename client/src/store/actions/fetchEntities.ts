@@ -4,7 +4,7 @@ import { actions as groups } from "../groups";
 import { actions as favs } from "../favs";
 import { actions as dish } from "../dish";
 import { actions as members } from "../group-members";
-
+import { actions as ingredients } from "../ingredients";
 import { REST } from "@gitgud/types";
 export default () => (dispatch) => {
   dispatch(
@@ -18,6 +18,7 @@ export default () => (dispatch) => {
         dispatch(favs.fetched(data.favs));
         dispatch(dish.fetched(data.dish));
         dispatch(members.fetched(data.members));
+        dispatch(ingredients.fetched(data.ingredients));
         dispatch(meta.fetchedEntities());
       },
       errorCallback: (data) => {},

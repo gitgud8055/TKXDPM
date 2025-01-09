@@ -6,22 +6,36 @@ import {
   GridActionsCellItem,
   GridColDef,
   GridRowId,
+  GridToolbarContainer,
 } from "@mui/x-data-grid";
-import { Avatar, Tooltip, Typography } from "@mui/material";
+import { Avatar, Button, Tooltip, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { useDispatch, useSelector } from "react-redux";
 import { openDialog } from "@/store/ui";
 import { getSelf } from "@/store/auth";
 import { actions as api } from "@/store/api";
+import { getGroupMembers } from "@/store/group-members";
+import AddIcon from "@mui/icons-material/Add";
+import AddMember from "./add-member";
 
 interface MemberProps {
-  members: Entity.User[];
   group: Entity.Group;
 }
 
+function Toolbar({ handleOpen }) {
+  return (
+    <GridToolbarContainer>
+      <Button color="primary" startIcon={<AddIcon />} onClick={handleOpen}>
+        Add member
+      </Button>
+    </GridToolbarContainer>
+  );
+}
+
 export default React.memo(ListMember);
-function ListMember({ members, group }: MemberProps) {
+function ListMember({ group }: MemberProps) {
+  const members = useSelector((state) => getGroupMembers(state, group._id));
   const dispatch: any = useDispatch();
   const initialRows = members.map((member) => {
     return {
@@ -32,6 +46,14 @@ function ListMember({ members, group }: MemberProps) {
   });
   const [rows, setRows] = React.useState<any[]>(initialRows);
   const user = useSelector(getSelf);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+    console.log("cli");
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     setRows(initialRows);
@@ -92,7 +114,7 @@ function ListMember({ members, group }: MemberProps) {
       headerName: "Name",
       width: 300,
       renderCell: (params) => {
-        console.log(params);
+        // console.log(params);
         return (
           <Tooltip title={params.row.name}>
             <div className="flex flex-row items-center h-full w-full gap-[0_8px]">
@@ -143,35 +165,40 @@ function ListMember({ members, group }: MemberProps) {
   ];
 
   return (
-    <div className="flex justify-center">
-      <Box
-        sx={{
-          maxHeight: "400px",
-          width: "500px",
-          maxWidth: "100%",
-          "& .actions": {
-            color: "text.secondary",
-          },
-          "& .textPrimary": {
-            color: "text.primary",
-          },
-        }}
-      >
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
+    <>
+      <AddMember open={open} onClose={handleClose} group={group} />
+      <div className="flex justify-center">
+        <Box
+          sx={{
+            maxHeight: "400px",
+            width: "500px",
+            maxWidth: "100%",
+            "& .actions": {
+              color: "text.secondary",
+            },
+            "& .textPrimary": {
+              color: "text.primary",
             },
           }}
-          pageSizeOptions={[5]}
-          checkboxSelection
-          disableRowSelectionOnClick
-        />
-      </Box>
-    </div>
+        >
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 5,
+                },
+              },
+            }}
+            pageSizeOptions={[5]}
+            checkboxSelection
+            disableRowSelectionOnClick
+            slots={{ toolbar: Toolbar }}
+            slotProps={{ toolbar: { handleOpen } }}
+          />
+        </Box>
+      </div>
+    </>
   );
 }

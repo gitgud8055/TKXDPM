@@ -9,7 +9,7 @@ export default class implements WSEvent<"ADD_DISH_MAT"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { id, material }: WS.Params.addDishMat
+    { id, material, rowId }: WS.Params.addDishMat
   ) {
     const dish = await deps.Dishes.getDetail(id);
     if (!dish) throw new Error("Dish not found");
@@ -23,7 +23,19 @@ export default class implements WSEvent<"ADD_DISH_MAT"> {
       quantity: material.quantity,
       unit: material.unit,
     });
+    // console.log(output.materials[len].food);
     await dish.save();
-    return [];
+    const len = dish.materials.length - 1;
+    const output = await dish.populate(`materials.${len}.food`);
+    return [
+      {
+        emit: this.on,
+        to: [userId],
+        data: {
+          id,
+          material: { ...material, food: output.materials[len].food },
+        },
+      },
+    ];
   }
 }

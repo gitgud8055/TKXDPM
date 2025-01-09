@@ -24,11 +24,16 @@ export class ShoppingFoods extends Wrapper {
       note,
     });
   }
+  public delete(id: string) {
+    return shoppingFood.findByIdAndDelete(id);
+  }
   public createMany(items: Partial<Entity.ShoppingFood>[]) {
     return shoppingFood.insertMany(items);
   }
-  public update({ _id, quantity, note }: Partial<Entity.ShoppingFood>) {
-    return shoppingFood.findByIdAndUpdate(_id, { $set: { quantity, note } });
+  public update({ _id, quantity, note, unit }: Partial<Entity.ShoppingFood>) {
+    return shoppingFood.findByIdAndUpdate(_id, {
+      $set: { quantity, note, unit },
+    });
   }
   public deleteList(listid: string) {
     return shoppingFood.deleteMany({ list: listid });

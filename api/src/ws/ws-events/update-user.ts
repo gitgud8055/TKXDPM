@@ -9,15 +9,24 @@ export default class implements WSEvent<"UPDATE_USER"> {
   public async invoke(
     ws: Websocket,
     client: Socket,
-    { username, avatar, phone }: WS.Params.updateUser
+    { username, avatar }: WS.Params.updateUser
   ) {
     const _id = client.data.userId;
+    console.log(_id, username, avatar);
     const updatedUser = await deps.User.update({
       _id,
       username,
       avatar,
-      phone,
     });
-    return [];
+    return [
+      {
+        emit: this.on,
+        to: [_id],
+        data: {
+          username,
+          avatar,
+        },
+      },
+    ];
   }
 }

@@ -11,6 +11,8 @@ import favs from "./favs";
 import dish from "./dish";
 import ws from "./middlewares/ws";
 import member from "./group-members";
+import ingredients from "./ingredients";
+import dashboard from "./dashboard-dish";
 
 const combinedReducer = combineReducers({
   auth,
@@ -21,6 +23,8 @@ const combinedReducer = combineReducers({
     favs,
     dish,
     member,
+    ingredients,
+    dashboard,
   }),
 });
 

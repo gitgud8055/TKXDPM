@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import Navigate from "../utils/reload-ws-navigate";
 import { logout } from "@/store/auth";
 
 const Logout = () => {

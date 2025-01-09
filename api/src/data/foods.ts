@@ -12,7 +12,10 @@ export class Foods extends Wrapper {
   public getByName(name: string) {
     return food.findOne({ name });
   }
-  public create({ name, image, unit, duration }: Partial<Entity.Ingredient>) {
+  public getAll() {
+    return food.find();
+  }
+  public create({ name, image, unit, duration }: Partial<Entity.Food>) {
     return food.create({
       name,
       image,

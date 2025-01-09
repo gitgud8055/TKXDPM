@@ -55,4 +55,22 @@ export const uploadFile =
     );
   };
 
+export const uploadAvatar =
+  (file: File, callback?: (args: REST.From.POST["/api/upload"]) => any) =>
+  (dispatch) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    dispatch(
+      actions.restCallBegan({
+        method: "post",
+        url: "/api/upload/avatar",
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        callback,
+      })
+    );
+  };
+
 export default slice.reducer;

@@ -18,6 +18,8 @@ export namespace Store {
       favs: Entity.FavDish[];
       dish: Entity.DishDetail[];
       member: Record<string, Entity.User[]>;
+      ingredients: Entity.Ingredient[];
+      dashboard: Entity.DishDetail[];
     };
   }
 }
